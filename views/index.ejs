@@ -1,0 +1,48 @@
+<%- include('partials/header') %>
+    <h2 style="text-align: center; padding-top: 18px;"><i class="fas fa-rocket"></i> BRL Mission Control</i>
+    </h2>
+    <!-- table -->
+    <div style="padding-top: 18px; text-align: center; margin: 0 auto">
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col">_id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">College Name</th>
+                    <th scope="col">Roll Number</th>
+                    <th scope="col">Txn ID</th>
+                    <th scope="col">Payment Status</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% registrations.forEach(element => { %>
+                    <tr>
+                        <form action="/update" method="post">
+                            <th scope="row"><input class="form-control" type="text" name="_id" value="<%= element.id %>" /></th>
+                            <td><input class="form-control" type="text" name="name" value="<%= element.name %>"></td>
+                            <td><input class="form-control" type="text" name="email" value="<%= element.email %>"></td>
+                            <td><input class="form-control" type="text" name="phoneNumber" value="<%= element.phoneNumber %>"></td>
+                            <td><input class="form-control" type="text" name="collegeName" value="<%= element.collegeName %>"></td>
+                            <td><input class="form-control" type="text" name="rollNumber" value="<%= element.rollNumber %>"></td>
+                            <td><input class="form-control" type="text" name="txnID" value="<%= element.txnID %>"></td>
+                            <td><input class="form-control" type="text" name="paymentStatus" value="<%= element.paymentStatus %>"></td>
+                            <td style="width: 320px;">
+                                <button class="btn btn-danger" type="submit" formaction="/delete"><i class="fas fa-trash"></i></button>
+                                <button class="btn btn-dark" type="submit">Update</button>
+                                <% if (element.paymentStatus == "Verified") { %>
+                                    <button class="btn btn-success" type="submit" formaction="/sendMail">Resend Mail</button>
+                                    <% } else { %>
+                                        <button class="btn btn-primary" type="submit" formaction="/verifyPayment">Verify & send mail</button>
+                                        <% } %>
+                            </td>
+                        </form>
+                    </tr>
+                    <%});%>
+            </tbody>
+        </table>
+    </div>
+
+    <%- include('partials/footer') %>
