@@ -2,7 +2,7 @@
     <h2 style="text-align: center; padding-top: 18px;"><i class="fas fa-rocket"></i> BRL Mission Control</i>
     </h2>
     <!-- table -->
-    <div style="padding-top: 18px; text-align: center; margin: 0 auto">
+    <div style="padding-top: 18px; text-align: center; max-width: 2000px ; margin: 0 auto">
         <table class="table table-borderless">
             <thead>
                 <tr>
@@ -21,14 +21,14 @@
                 <% registrations.forEach(element => { %>
                     <tr>
                         <form action="/update" method="post">
-                            <th scope="row"><input class="form-control" type="text" name="_id" value="<%= element.id %>" /></th>
+                            <th style="width: 260px;" scope="row"><input class="form-control" type="text" name="_id" value="<%= element.id %>" /></th>
                             <td><input class="form-control" type="text" name="name" value="<%= element.name %>"></td>
                             <td><input class="form-control" type="text" name="email" value="<%= element.email %>"></td>
-                            <td><input class="form-control" type="text" name="phoneNumber" value="<%= element.phoneNumber %>"></td>
+                            <td style="width: 140px;" ><input class="form-control" type="text" name="phoneNumber" value="<%= element.phoneNumber %>"></td>
                             <td><input class="form-control" type="text" name="collegeName" value="<%= element.collegeName %>"></td>
-                            <td><input class="form-control" type="text" name="rollNumber" value="<%= element.rollNumber %>"></td>
-                            <td><input class="form-control" type="text" name="txnID" value="<%= element.txnID %>"></td>
-                            <td><input class="form-control" type="text" name="paymentStatus" value="<%= element.paymentStatus %>"></td>
+                            <td style="width: 180px;"><input class="form-control" type="text" name="rollNumber" value="<%= element.rollNumber %>"></td>
+                            <td style="width: 200px;"><input class="form-control" type="text" name="txnID" value="<%= element.txnID %>"></td>
+                            <td style="width: 110px;" ><input class="form-control" type="text" name="paymentStatus" value="<%= element.paymentStatus %>"></td>
                             <td style="width: 320px;">
                                 <button class="btn btn-danger" type="submit" formaction="/delete"><i class="fas fa-trash"></i></button>
                                 <button class="btn btn-dark" type="submit">Update</button>

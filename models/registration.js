@@ -5,6 +5,7 @@ require("dotenv").config();
 
 mongoose.connect(
     "mongodb://localhost:27017/registration",
+    //DB,
     (err) => {
         if (err) {
             console.log(err);
