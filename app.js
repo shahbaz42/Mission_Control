@@ -103,6 +103,6 @@ app.post("/sendMail", check_login.is_authenticated , (req, res) => {
 });
 
 
-app.listen(8001, () => {
+app.listen(process.env.PORT ||8002, () => {
     console.log('Server started on port 8001');
 });
