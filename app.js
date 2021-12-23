@@ -1,6 +1,10 @@
 const express = require('express');
 const mail = require('./services/mail');
 const Registrations = require('./models/registration');
+const routes = require('./routes/router');
+const session = require("express-session");
+const passport = require("passport");
+const check_login = require("./middlewares/is_authenticated");
 const app = express();
 
 const fs = require('fs');
@@ -9,9 +13,23 @@ var mail_template = fs.readFileSync('./mail_templates/confirmation_email_templat
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(
+    session({
+        secret: process.env.SESSIONS_SECRET,
+        resave: false,
+        saveUninitialized: false,
+    })
+);
+
+app.use(passport.initialize()); //initialising passport
+app.use(passport.session()); //making express use passport.sessions
+
 app.set("view engine", "ejs")
 
-app.get("/", (req, res) => {
+app.use("/", routes);
+
+app.get("/", check_login.is_authenticated , (req, res) => {
     Registrations.find({}, (err, data) => {
         if (err) {
             res.send("error is", err);
@@ -21,7 +39,7 @@ app.get("/", (req, res) => {
     });
 });
 
-app.post("/delete", (req, res) => {
+app.post("/delete", check_login.is_authenticated , (req, res) => {
     Registrations.findByIdAndDelete(req.body._id, (err, data) => {
         if (err) {
             res.send("error is", err);
@@ -31,7 +49,7 @@ app.post("/delete", (req, res) => {
     });
 });
 
-app.post("/update", (req, res) => {
+app.post("/update",  check_login.is_authenticated , (req, res) => {
     const { _id, name, email, phoneNumber, collegeName, rollNumber, txnID, paymentStatus } = req.body;
     console.log(req.body);
     Registrations.findByIdAndUpdate(_id, {
@@ -53,7 +71,7 @@ app.post("/update", (req, res) => {
     });
 });
 
-app.post("/verifyPayment", (req, res) => {
+app.post("/verifyPayment",  check_login.is_authenticated , (req, res) => {
     const { _id, name, email } = req.body;
     Registrations.findByIdAndUpdate(_id, {
         $set: {
@@ -66,14 +84,14 @@ app.post("/verifyPayment", (req, res) => {
             mail.sendMail(email, "Confirmation Message", "confirmed", mail_template, (err, result) => {
                 if (err) {
                     console.log(err);
-                } else {}
+                } else { }
             });
             res.redirect("/");
         }
     });
 });
 
-app.post("/sendMail", (req, res) => {
+app.post("/sendMail", check_login.is_authenticated , (req, res) => {
     const { email } = req.body;
     mail.sendMail(email, "Confirmation Message", "confirmed", mail_template, (err, result) => {
         if (err) {
