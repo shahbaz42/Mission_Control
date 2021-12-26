@@ -15,14 +15,14 @@ const oAuth2Client = new google.auth.OAuth2(
 
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
-const sendMail = (recipient, subject, message, html, callback) => {
-
+const sendMail = (recipient, subject, message, html, name, callback) => {
+    html = html.replace("Hey Blockgeek!", "Hi " + name.split(" ")[0] + "!");
     oAuth2Client.getAccessToken(function(accessToken) {
         const transport = nodemailer.createTransport({
             service: "gmail",
             auth: {
                 type: "oAuth2",
-                user: "mail.sender.do.not.reply@gmail.com",
+                user: "akgec.blockchain@gmail.com",
                 clientId: CLIENT_ID,
                 clientSecret: CLIENT_SECRET,
                 refreshToken: REFRESH_TOKEN,
@@ -31,7 +31,7 @@ const sendMail = (recipient, subject, message, html, callback) => {
         });
 
         const mailOptions = {
-            from: "mail sender <mail.sender.do.not.reply@gmail.com>",
+            from: "BRL AKGEC <akgec.blockchain@gmail.com>",
             to: recipient,
             subject: subject,
             text: message,

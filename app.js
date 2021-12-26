@@ -81,7 +81,7 @@ app.post("/verifyPayment",  check_login.is_authenticated , (req, res) => {
         if (err) {
             res.send(err);
         } else {
-            mail.sendMail(email, "Confirmation Message", "confirmed", mail_template, (err, result) => {
+            mail.sendMail(email, "Congratulations! Your seat is reserved.", "confirmed", mail_template, name, (err, result) => {
                 if (err) {
                     console.log(err);
                 } else { }
@@ -92,8 +92,8 @@ app.post("/verifyPayment",  check_login.is_authenticated , (req, res) => {
 });
 
 app.post("/sendMail", check_login.is_authenticated , (req, res) => {
-    const { email } = req.body;
-    mail.sendMail(email, "Confirmation Message", "confirmed", mail_template, (err, result) => {
+    const { email, name } = req.body;
+    mail.sendMail(email, "Congratulations! Your seat is reserved.", "confirmed", mail_template, name, (err, result) => {
         if (err) {
             res.send(err);
         } else {
