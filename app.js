@@ -7,10 +7,6 @@ const passport = require("passport");
 const check_login = require("./middlewares/is_authenticated");
 const app = express();
 
-const fs = require('fs');
-
-var mail_template = fs.readFileSync('./mail_templates/confirmation_email_template.html', 'utf8');
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -29,80 +25,6 @@ app.set("view engine", "ejs")
 
 app.use("/", routes);
 
-app.get("/", check_login.is_authenticated , (req, res) => {
-    Registrations.find({}, (err, data) => {
-        if (err) {
-            res.send("error is", err);
-        } else {
-            res.render("index", { registrations: data });
-        }
-    });
-});
-
-app.post("/delete", check_login.is_authenticated , (req, res) => {
-    Registrations.findByIdAndDelete(req.body._id, (err, data) => {
-        if (err) {
-            res.send("error is", err);
-        } else {
-            res.redirect("/");
-        }
-    });
-});
-
-app.post("/update",  check_login.is_authenticated , (req, res) => {
-    const { _id, name, email, phoneNumber, collegeName, rollNumber, txnID, paymentStatus } = req.body;
-    console.log(req.body);
-    Registrations.findByIdAndUpdate(_id, {
-        $set: {
-            name,
-            email,
-            phoneNumber,
-            collegeName,
-            rollNumber,
-            txnID,
-            paymentStatus
-        }
-    }, (err, data) => {
-        if (err) {
-            res.send(err);
-        } else {
-            res.redirect("/");
-        }
-    });
-});
-
-app.post("/verifyPayment",  check_login.is_authenticated , (req, res) => {
-    const { _id, name, email } = req.body;
-    Registrations.findByIdAndUpdate(_id, {
-        $set: {
-            paymentStatus: "Verified"
-        }
-    }, (err, data) => {
-        if (err) {
-            res.send(err);
-        } else {
-            mail.sendMail(email, "Congratulations! Your seat is reserved.", "confirmed", mail_template, name, (err, result) => {
-                if (err) {
-                    console.log(err);
-                } else { }
-            });
-            res.redirect("/");
-        }
-    });
-});
-
-app.post("/sendMail", check_login.is_authenticated , (req, res) => {
-    const { email, name } = req.body;
-    mail.sendMail(email, "Congratulations! Your seat is reserved.", "confirmed", mail_template, name, (err, result) => {
-        if (err) {
-            res.send(err);
-        } else {
-            res.redirect("/");
-        }
-    });
-});
-
-
-app.listen(process.env.PORT ||8002, () => {
+app.listen(process.env.PORT || 8002, () => {
     console.log('Server started on port 8001');
 });

@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const DB = "mongodb+srv://"+ process.env.DB_USERNAME +":"+process.env.DB_PASSWORD+"@cluster0.ymjcf.mongodb.net/BRL_Registration?retryWrites=true&w=majority"
+//const DB = "mongodb+srv://"+ process.env.DB_USERNAME +":"+process.env.DB_PASSWORD+"@cluster0.ymjcf.mongodb.net/BRL_Registration?retryWrites=true&w=majority"
 
 mongoose.connect(
-    //"mongodb://localhost:27017/registration",
-    DB,
+    "mongodb://localhost:27017/registration",
+    //DB,
     (err) => {
         if (err) {
             console.log(err);
