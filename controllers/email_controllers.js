@@ -1,4 +1,5 @@
 const Registrations = require("../models/registration");
+const User = require("../models/auth/user");
 const mail = require("../services/mail");
 
 const fs = require('fs');
@@ -34,3 +35,27 @@ exports.send_mail = (req, res) => {
         }
     });
 };
+
+exports.update_email_template = (req, res) => {
+    const email_template = req.body.email_template ; 
+    console.log(email_template);
+    User.findOneAndUpdate({email: 'admin@admin'},{mail_template : email_template}, (error)=>{
+        if(error){
+            console.log(error);
+            res.send("Some error occured.");
+        } else {
+            res.redirect("/");
+        }
+    })
+}
+
+exports.get_email_template = (req, res) => {
+    User.findOne({email: 'admin@admin'}, (error, result)=>{
+        if(error){
+            console.log(error);
+            res.send("Some error occured.");
+        } else {
+            res.render("update_email", {email_template : result.mail_template});
+        }
+    })
+}
