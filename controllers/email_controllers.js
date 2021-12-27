@@ -27,12 +27,14 @@ exports.verify_payment = (req, res) => {
 
 exports.send_mail = (req, res) => {
     const { email, name } = req.body;
-    mail.sendMail(email, "Congratulations! Your seat is reserved.", "confirmed", mail_template, name, (err, result) => {
-        if (err) {
-            res.send(err);
-        } else {
-            res.redirect("/");
-        }
+    User.findOne({email: 'admin@admin'}, (error, result)=>{
+        mail.sendMail(email, "Congratulations! Your seat is reserved.", "confirmed", result.mail_template, name, (err, result) => {
+            if (err) {
+                res.send(err);
+            } else {
+                res.redirect("/");
+            }
+        });
     });
 };
 
@@ -58,4 +60,15 @@ exports.get_email_template = (req, res) => {
             res.render("update_email", {email_template : result.mail_template});
         }
     })
+}
+
+exports.preview_email_template = (req, res) => {
+    User.findOne({email: "admin@admin"}, (error, result) => {
+        if(error){
+            console.log(error);
+            res.send("Some error occured");
+        } else{
+            res.send(result.mail_template);
+        }
+    });
 }

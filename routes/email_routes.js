@@ -7,5 +7,6 @@ router.post("/verifyPayment", check_login.is_authenticated, email_controllers.ve
 router.post("/sendMail", check_login.is_authenticated, email_controllers.send_mail);
 router.post("/updateEmailTemplate", check_login.is_authenticated, email_controllers.update_email_template);
 router.get("/updateEmailTemplate", check_login.is_authenticated, email_controllers.get_email_template);
+router.get("/previewEmailTemplate", check_login.is_authenticated, email_controllers.preview_email_template);
 
 module.exports = router;
