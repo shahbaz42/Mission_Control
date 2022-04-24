@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-//const DB = "mongodb+srv://"+ process.env.DB_USERNAME +":"+process.env.DB_PASSWORD+"@cluster0.ymjcf.mongodb.net/BRL_Registration?retryWrites=true&w=majority"
+const DB = "mongodb+srv://"+ process.env.DB_USERNAME +":"+process.env.DB_PASSWORD+"@cluster0.ymjcf.mongodb.net/Blockverse_Registration?retryWrites=true&w=majority"
 
 mongoose.connect(
-    "mongodb://localhost:27017/registration",
-    //DB,
+    // "mongodb://localhost:27017/registration",
+    DB,
     (err) => {
         if (err) {
             console.log(err);
@@ -16,32 +16,47 @@ mongoose.connect(
 );
 
 const Schema = mongoose.Schema({
-    name: {
+    leader_email: {
         type: String,
         required: true
     },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    phoneNumber: {
-        type: Number,
-        required: true,
-    },
-    collegeName: {
+    leader_phoneNumber: {
         type: String,
         required: true
     },
-    rollNumber: {
-        type: Number,
-        required: true
-    },
-    txnID: {
+    leader_roll_number: {
         type: String,
         required: true
     },
-    paymentStatus: {
+    member_1_phoneNumber: {
+        type: String,
+    },
+    member_1_name: {
+        type: String,
+    },
+    member_1_roll_number : {
+        type: String,
+    },
+    recaptchaReactive: {
+        type: String
+    },
+    team_leader_name: {
+        type: String,
+        required: true
+    },
+    team_name: {
+        type: String,
+        required: true
+    },
+    teamsize: {
+        type: String,
+        required: true
+    },
+    year: {
+        type: String,
+        required: true
+    },
+    Status: {
         type: String,
     }
 });

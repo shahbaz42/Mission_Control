@@ -22,8 +22,8 @@ const sendMail = (recipient, subject, message, html, name, callback) => {
             service: "gmail",
             auth: {
                 type: "oAuth2",
-                //user: "akgec.blockchain@gmail.com",
-                user: "mail.sender.do.not.reply@gmail.com",
+                user: "akgec.blockchain@gmail.com",
+                //user: "mail.sender.do.not.reply@gmail.com",
                 clientId: CLIENT_ID,
                 clientSecret: CLIENT_SECRET,
                 refreshToken: REFRESH_TOKEN,
@@ -32,7 +32,7 @@ const sendMail = (recipient, subject, message, html, name, callback) => {
         });
 
         const mailOptions = {
-            from: "Mail Sender <mail.sender.do.not.reply@gmail.com>",
+            from: "BRL AKGEC <akgec.blockchain@gmail.com>",
             to: recipient,
             subject: subject,
             text: message,
