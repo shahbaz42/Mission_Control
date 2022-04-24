@@ -23,8 +23,6 @@ exports.delete = (req, res) => {
 exports.update = (req, res) => {
     const { _id, leader_email, leader_phoneNumber, leader_roll_number, member_1_phoneNumber, member_1_name, member_1_roll_number, team_leader_name, team_name, teamsize, year, Status } = req.body;
 
-    console.log(req.body);
-
     Registrations.findByIdAndUpdate(_id, {
         $set: {
             leader_email,
