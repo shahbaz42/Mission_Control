@@ -6,10 +6,10 @@ const fs = require('fs');
 var mail_template = fs.readFileSync('./mail_templates/confirmation_email_template.html', 'utf8');
 
 exports.verify = (req, res) => {
-    const { _id, team_leader_name, leader_email } = req.body;
+    const { _id, name, email } = req.body;
     Registrations.findByIdAndUpdate(_id, {
         $set: {
-            Status: "Verified"
+            status: "Verified"
         }
     }, (err, data) => {
         if (err) {
@@ -19,7 +19,7 @@ exports.verify = (req, res) => {
                 if(error){
                     res.send(error);
                 }else{
-                    mail.sendMail(leader_email, "Congratulations! Your registration is confirmed.", "confirmed", result.mail_template, team_leader_name, (err, result) => {
+                    mail.sendMail(email, "Congratulations! Your registration is confirmed.", "confirmed", result.mail_template, name, (err, result) => {
                         if (err) {
                             res.send(err);
                         } else {
@@ -34,10 +34,9 @@ exports.verify = (req, res) => {
 
 
 exports.send_mail = (req, res) => {
-    console.log(req.body);
-    const { leader_email, team_leader_name } = req.body;
+    const { email, name } = req.body;
     User.findOne({email: 'admin@admin'}, (error, result)=>{
-        mail.sendMail(leader_email, "Congratulations! Your registration is confirmed.", "confirmed", result.mail_template, team_leader_name, (err, result) => {
+        mail.sendMail(email, "Congratulations! Your registration is confirmed.", "confirmed", result.mail_template, name, (err, result) => {
             if (err) {
                 res.send(err);
             } else {
@@ -49,7 +48,6 @@ exports.send_mail = (req, res) => {
 
 exports.update_email_template = (req, res) => {
     const email_template = req.body.email_template ; 
-    console.log(email_template);
     User.findOneAndUpdate({email: 'admin@admin'},{mail_template : email_template}, (error)=>{
         if(error){
             console.log(error);
