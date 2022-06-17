@@ -16,49 +16,51 @@ mongoose.connect(
 );
 
 const Schema = mongoose.Schema({
-    leader_email: {
+    name: {
         type: String,
         required: true
     },
-    leader_phoneNumber: {
+    branch:{
         type: String,
-        required: true
-    },
-    leader_roll_number: {
-        type: String,
-        required: true
-    },
-    member_1_phoneNumber: {
-        type: String,
-    },
-    member_1_name: {
-        type: String,
-    },
-    member_1_roll_number : {
-        type: String,
-    },
-    recaptchaReactive: {
-        type: String
-    },
-    team_leader_name: {
-        type: String,
-        required: true
-    },
-    team_name: {
-        type: String,
-        required: true
-    },
-    teamsize: {
-        type: String,
-        required: true
+        required:true
     },
     year: {
-        type: String,
+        type: Number,
+        required:true
+    },
+    rollNumber: {
+        type: Number,
         required: true
     },
-    Status: {
+    email: {
         type: String,
+        required: true,
+        unique: true
+    },
+    phoneNumber: {
+        type: Number,
+        required: true
+    },
+    reason:{
+      type: String,
+      required: true
+    },
+    status:{
+        type: String,
+        default: "Pending"
     }
+    // collegeName: {
+    //     type: String,
+    //     required: true
+    // },
+   
+    // txnID : {
+    //     type: String,
+    //     required: true
+    // },
+    // paymentDate : {
+    //     type: Date,
+    // }
 });
 
 const Registrations = mongoose.model("Registrations", Schema);
