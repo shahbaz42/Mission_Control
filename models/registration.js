@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const DB = "mongodb+srv://"+ process.env.DB_USERNAME +":"+process.env.DB_PASSWORD+"@cluster0.ymjcf.mongodb.net/Blockverse_Registration?retryWrites=true&w=majority"
+const DB = process.env.DB_URL;
 
 mongoose.connect(
     // "mongodb://localhost:27017/registration",
