@@ -6,6 +6,7 @@ const CLIENT_ID = process.env.MAILER_CLIENT_ID;
 const CLIENT_SECRET = process.env.MAILER_CLIENT_SECRET;
 const REDIRECT_URI = process.env.MAILER_REDIRECT_URI;
 const REFRESH_TOKEN = process.env.MAILER_REFRESH_TOKEN;
+const MAIL = process.env.MAIL
 
 const oAuth2Client = new google.auth.OAuth2(
     CLIENT_ID,
@@ -22,7 +23,7 @@ const sendMail = (recipient, subject, message, html, name, callback) => {
             service: "gmail",
             auth: {
                 type: "oAuth2",
-                user: "akgec.blockchain@gmail.com",
+                user: MAIL,
                 //user: "mail.sender.do.not.reply@gmail.com",
                 clientId: CLIENT_ID,
                 clientSecret: CLIENT_SECRET,
@@ -44,7 +45,6 @@ const sendMail = (recipient, subject, message, html, name, callback) => {
         });
     });
 };
-
 
 module.exports = {
     sendMail,
