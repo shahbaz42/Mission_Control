@@ -1,7 +1,7 @@
 const Registrations = require("../models/registration");
 
 exports.render = (req, res) => {
-    Registrations.find({}, (err, data) => {
+    Registrations.find({}).lean().exec((err, data) => {
         if (err) {
             res.send("error is", err);
         } else {
@@ -21,21 +21,28 @@ exports.delete = (req, res) => {
 };
 
 exports.update = (req, res) => {
-    const { _id, leader_email, leader_phoneNumber, leader_roll_number, member_1_phoneNumber, member_1_name, member_1_roll_number, team_leader_name, team_name, teamsize, year, Status } = req.body;
+    const { 
+        _id, 
+        name,
+        branch,
+        year,
+        rollNumber,
+        email,
+        phoneNumber,
+        reason,
+        status,
+    } = req.body;
 
     Registrations.findByIdAndUpdate(_id, {
         $set: {
-            leader_email,
-            leader_phoneNumber,
-            leader_roll_number,
-            member_1_phoneNumber,
-            member_1_name,
-            member_1_roll_number,
-            team_leader_name,
-            team_name,
-            teamsize,
+            name,
+            branch,
             year,
-            Status
+            rollNumber,
+            email,
+            phoneNumber,
+            reason,
+            status,
         }
     }, (err, data) => {
         if (err) {
