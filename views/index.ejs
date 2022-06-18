@@ -1,6 +1,4 @@
 <%- include('partials/header') %>
-        <h2 style="text-align: center; padding-top: 18px;"><i class="fas fa-rocket"></i> BRL Mission Control v2</i>
-        </h2>
         <!-- table -->
         <div style="padding-top: 18px; text-align: center; max-width: 1660px ; margin: 0 auto">
             <div style="display:block; text-align: left;">
@@ -16,88 +14,130 @@
             <div class="row" style="text-align: center; margin: 4px">
                 <% registrations.forEach(element=> { %>
 
-                    <div class="card m-1" style="max-width: 420px; min-width: 400px; display: inline-block;">
+                    <% if (element.present == "Yes") { %>
+                        <div id="<%- element._id %>" class="card m-1" style="max-width: 420px; min-width: 400px; display: inline-block; background-color:#d4edda;">
+                    <% } else {%>
+                        <div id="<%- element._id %>" class="card m-1" style="max-width: 420px; min-width: 400px; display: inline-block;">
+                    <% } %>
                         <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
                         <div class="card-body">
                             <br>
-                            <h5 class="card-title"><%= element.name %> </h5> 
-                            <br>
                             <form action="/update" method="post"  >
+                                <details open="true">
+                                    <summary>
+                                        <h5 class="card-title" style="display: inline-block;"><%= element.name %> </h5> 
+                                        <br>
+                                        <div class="form-group">
+                                            <% if (element.status=="Verified" ) { %>
+                                                <button class="btn btn-success" type="submit" formaction="/sendMail">Resend Mail</button>
+                                            <% } else { %>
+                                                    <button class="btn btn-primary" type="submit" formaction="/verify">Verify & send mail</button>
+                                            <% } %>
+                                        </div>
+                                    </summary>
 
-                                <!-- id -->
-                                <div class="form-group">
-                                    <label for="_id" style="text-align: left; display:block">id</label>
-                                    <input class="form-control" id="_id" name="_id" type="text" value="<%= element._id %>">
-                                </div>
+                                        <!-- id -->
+                                        <div class="form-group">
+                                            <label for="_id" style="text-align: left; display:block">id</label>
+                                            <input class="form-control" id="_id" name="_id" type="text" value="<%= element._id %>">
+                                        </div>
 
-                                <!-- name -->
-                                <div class="form-group">
-                                    <label for="name" style="text-align: left; display:block">Name</label>
-                                    <input class="form-control" id="name" name="name" type="text" value="<%= element.name %>">
-                                </div>
+                                        <!-- name -->
+                                        <div class="form-group">
+                                            <label for="name" style="text-align: left; display:block">Name</label>
+                                            <input class="form-control" id="name" name="name" type="text" value="<%= element.name %>">
+                                        </div>
+                                        
+                                        <!-- branch -->
+                                        <div class="form-group">
+                                            <label for="branch" style="text-align: left; display:block">Branch</label>
+                                            <input class="form-control" id="branch" name="branch" type="text" value="<%= element.branch %>">
+                                        </div>
 
-                                <!-- branch -->
-                                <div class="form-group">
-                                    <label for="branch" style="text-align: left; display:block">Branch</label>
-                                    <input class="form-control" id="branch" name="branch" type="text" value="<%= element.branch %>">
-                                </div>
+                                        <!-- year -->
+                                        <div class="form-group">
+                                            <label for="year" style="text-align: left; display:block">Year</label>
+                                            <input class="form-control" id="year" name="year" type="text" value="<%= element.year %>">
+                                        </div>
 
-                                <!-- year -->
-                                <div class="form-group">
-                                    <label for="year" style="text-align: left; display:block">Year</label>
-                                    <input class="form-control" id="year" name="year" type="text" value="<%= element.year %>">
-                                </div>
+                                        <!-- rollNumber -->
+                                        <div class="form-group">
+                                            <label for="rollNumber" style="text-align: left; display:block">Roll Number</label>
+                                            <input class="form-control" id="rollNumber" name="rollNumber" type="text" value="<%= element.rollNumber %>">
+                                        </div>
 
-                                <!-- rollNumber -->
-                                <div class="form-group">
-                                    <label for="rollNumber" style="text-align: left; display:block">Roll Number</label>
-                                    <input class="form-control" id="rollNumber" name="rollNumber" type="text" value="<%= element.rollNumber %>">
-                                </div>
+                                        <!-- email -->
+                                        <div class="form-group">
+                                            <label for="email" style="text-align: left; display:block">Email</label>
+                                            <input class="form-control" id="email" name="email" type="text" value="<%= element.email %>">
+                                        </div>
 
-                                <!-- email -->
-                                <div class="form-group">
-                                    <label for="email" style="text-align: left; display:block">Email</label>
-                                    <input class="form-control" id="email" name="email" type="text" value="<%= element.email %>">
-                                </div>
+                                        <!-- phoneNumber -->
+                                        <div class="form-group">
+                                            <label for="phoneNumber" style="text-align: left; display:block">Phone Number</label>
+                                            <input class="form-control" id="phoneNumber" name="phoneNumber" type="text" value="<%= element.phoneNumber %>">
+                                        </div>
 
-                                <!-- phoneNumber -->
-                                <div class="form-group">
-                                    <label for="phoneNumber" style="text-align: left; display:block">Phone Number</label>
-                                    <input class="form-control" id="phoneNumber" name="phoneNumber" type="text" value="<%= element.phoneNumber %>">
-                                </div>
+                                        <!-- reason -->
+                                        <div class="form-group">
+                                            <label for="reason" style="text-align: left; display:block">Reason</label>
+                                            <input class="form-control" id="reason" name="reason" type="text" value="<%= element.reason %>">
+                                        </div>
 
-                                <!-- reason -->
-                                <div class="form-group">
-                                    <label for="reason" style="text-align: left; display:block">Reason</label>
-                                    <input class="form-control" id="reason" name="reason" type="text" value="<%= element.reason %>">
-                                </div>
+                                        <!-- Status -->
+                                        <div class="form-group">
+                                            <label for="status" style="text-align: left; display:block">Status</label>
+                                            <input class="form-control" id="status" name="status" type="text" value="<%= element.status %>">
+                                        </div>
 
-                                <!-- Status -->
-                                <div class="form-group">
-                                    <label for="status" style="text-align: left; display:block">Status</label>
-                                    <input class="form-control" id="status" name="status" type="text" value="<%= element.status %>">
-                                </div>
+                                        <!-- present -->
+                                        <div class="form-group">
+                                            <label for="present" style="text-align: left; display:block">Present</label>
+                                            <input class="form-control" id="present" name="present" type="text" value="<%= element.present %>">
+                                        </div>
 
-                                <!-- ---- -->
-                                
-                                <div class="form-group">
-                                    <button class="btn btn-danger" type="submit" formaction="/delete"><i class="fas fa-trash"></i></button>
-                                    <button class="btn btn-dark" type="submit">Update</button>
-                                    <% if (element.status=="Verified" ) { %>
-                                        <button class="btn btn-success" type="submit" formaction="/sendMail">Resend Mail</button>
-                                    <% } else { %>
-                                            <button class="btn btn-primary" type="submit" formaction="/verify">Verify & send mail</button>
-                                    <% } %>
-                                </div>
+                                        <!-- ---- -->
 
+                                        <div class="form-group">
+                                            <button class="btn btn-danger" type="submit" formaction="/delete"><i class="fas fa-trash"></i></button>
+                                            <button class="btn btn-dark" type="submit">Update</button>
+                                        </div>
+                            
+                                </details>
                             </form>
                         </div>
                     </div>
-
                     <%});%>
-            </div>
-
-
+                </div>
         </div>
 
-        <%- include('partials/footer') %>
+        <script>
+            var details = document.querySelectorAll("details");
+            var actual_width = window.innerWidth;
+
+            if (actual_width < 735) {
+                details.forEach(element => {
+                    element.open = false;
+                });
+            } else {
+                details.forEach(element => {
+                    element.open = true;
+                });
+            }
+
+            function myFunction(x) {
+                if (x.matches) { // If media query matches
+                    details.forEach(element => {
+                        element.open = false;
+                    });
+                } else {
+                    details.forEach(element => {
+                        element.open = true;
+                    });
+                }
+            }
+            var x = window.matchMedia("(max-width: 735px)")
+            x.addListener(myFunction)
+        </script>
+
+<%- include('partials/footer') %>
