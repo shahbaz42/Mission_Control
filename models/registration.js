@@ -52,6 +52,9 @@ const Schema = mongoose.Schema({
     status:{
         type: String,
         default: "Pending"
+    },
+    questions:{
+        type: String,
     }
     // collegeName: {
     //     type: String,

@@ -31,7 +31,8 @@ exports.update = (req, res) => {
         phoneNumber,
         reason,
         status,
-        present
+        present,
+        questions
     } = req.body;
 
     Registrations.findByIdAndUpdate(_id, {
@@ -44,7 +45,8 @@ exports.update = (req, res) => {
             phoneNumber,
             reason,
             status,
-            present
+            present,
+            questions
         }
     }, (err, data) => {
         if (err) {
