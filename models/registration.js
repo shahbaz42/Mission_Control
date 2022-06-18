@@ -45,6 +45,10 @@ const Schema = mongoose.Schema({
       type: String,
       required: true
     },
+    present: {
+        type: String,
+        default: "No",
+    },
     status:{
         type: String,
         default: "Pending"
