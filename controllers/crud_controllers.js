@@ -57,6 +57,18 @@ exports.update = (req, res) => {
 
 exports.ticket_verification = (req, res) => {
     const id = req.params.id;
+    Registrations.findById(id).lean().exec((err, data) => {
+        if (err) {
+            res.send("Can't find the ticket");
+        } else {
+            res.render("verify_ticket", { data });
+        }
+    });
+}
+
+exports.mark_present = (req, res) => {
+    const id = req.body._id;
+
     Registrations.findByIdAndUpdate(id, {
         $set: {
             present: "Yes",

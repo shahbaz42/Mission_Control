@@ -10,6 +10,7 @@ router.post("/update", check_login.is_authenticated, crud_controllers.update);
 
 // Ticket verification routes
 router.get("/ticket/verify/:id", check_login.is_authenticated_for_ticket_checking, crud_controllers.ticket_verification);
+router.post("/ticket/mark_present", check_login.is_authenticated_for_ticket_checking, crud_controllers.mark_present);
 
 module.exports = router;
 

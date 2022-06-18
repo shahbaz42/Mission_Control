@@ -1,0 +1,78 @@
+<%- include('partials/header') %>
+
+  <div class="container mt-5">
+
+    <div class="row">
+      <div class="col-sm-8" style="margin:0 auto;">
+        <div class="card">
+          <div class="card-body">
+            <br>
+            <center>
+              <h3>
+                <%- data.name %>
+              </h3>
+              <br>
+            </center>
+
+            <form action="/ticket/mark_present" method="post">
+              
+              <input type="hidden" name="_id" value="<%- data._id %>">
+              
+              <!-- branch -->
+              <div class="form-group">
+                <label for="branch" style="text-align: left; display:block">Branch</label>
+                <input class="form-control" id="branch" name="branch" type="text" value="<%= data.branch %>" disabled>
+              </div>
+
+              <!-- year -->
+              <div class="form-group">
+                <label for="year" style="text-align: left; display:block">Year</label>
+                <input class="form-control" id="year" name="year" type="text" value="<%= data.year %>" disabled>
+              </div>
+
+              <!-- rollNumber -->
+              <div class="form-group">
+                <label for="rollNumber" style="text-align: left; display:block">Roll Number</label>
+                <input class="form-control" id="rollNumber" name="rollNumber" type="text" value="<%= data.rollNumber %>" disabled>
+              </div>
+
+              <!-- email -->
+              <div class="form-group">
+                <label for="email" style="text-align: left; display:block">Email</label>
+                <input class="form-control" id="email" name="email" type="text" value="<%= data.email %>" disabled>
+              </div>
+
+              <!-- phoneNumber -->
+              <div class="form-group">
+                <label for="phoneNumber" style="text-align: left; display:block">Phone Number</label>
+                <input class="form-control" id="phoneNumber" name="phoneNumber" type="text" value="<%= data.phoneNumber %>" disabled>
+              </div>
+
+              <!-- reason -->
+              <div class="form-group">
+                <label for="reason" style="text-align: left; display:block">Reason</label>
+                <input class="form-control" id="reason" name="reason" type="text" value="<%= data.reason %>" disabled>
+              </div>
+
+              <!-- Status -->
+              <div class="form-group">
+                <label for="status" style="text-align: left; display:block">Status</label>
+                <input class="form-control" id="status" name="status" type="text" value="<%= data.status %>" disabled>
+              </div>
+              <br>
+              <br>
+
+              <center>
+                <button class="btn btn-lg btn-success" type="submit">Mark Present</button>
+              </center>
+            
+            </form>
+
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
