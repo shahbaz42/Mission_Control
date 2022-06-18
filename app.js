@@ -4,8 +4,17 @@ const Registrations = require('./models/registration');
 const routes = require('./routes/router');
 const session = require("express-session");
 const passport = require("passport");
+const rateLimit = require("express-rate-limit");
 const check_login = require("./middlewares/is_authenticated");
+
+const limiter = rateLimit({
+	windowMs: 2 * 60 * 1000, // 10 minutes
+	max: 400, // limit each IP to 100 requests per windowMs
+});
+
 const app = express();
+app.set('trust proxy', 1);
+app.use(limiter);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
