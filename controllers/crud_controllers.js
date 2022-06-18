@@ -31,6 +31,7 @@ exports.update = (req, res) => {
         phoneNumber,
         reason,
         status,
+        present
     } = req.body;
 
     Registrations.findByIdAndUpdate(_id, {
@@ -43,6 +44,7 @@ exports.update = (req, res) => {
             phoneNumber,
             reason,
             status,
+            present
         }
     }, (err, data) => {
         if (err) {
@@ -52,3 +54,18 @@ exports.update = (req, res) => {
         }
     });
 };
+
+exports.ticket_verification = (req, res) => {
+    const id = req.params.id;
+    Registrations.findByIdAndUpdate(id, {
+        $set: {
+            present: "Yes",
+        }
+    }, (err, data) => {
+        if (err) {
+            res.send("Can't verify the ticket");
+        } else {
+            res.redirect(`/#${id}`);
+        }
+    });
+}
