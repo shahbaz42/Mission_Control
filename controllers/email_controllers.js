@@ -7,6 +7,10 @@ var mail_template = fs.readFileSync('./mail_templates/confirmation_email_templat
 
 exports.verify = (req, res) => {
     const { _id, name, email } = req.body;
+    const DOMAIN = process.env.DOMAIN;
+    const qr_url = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${DOMAIN}/ticket/verify/${_id}`;
+    const template_qr_url = process.env.TEMPLATE_QR_URL;
+
     Registrations.findByIdAndUpdate(_id, {
         $set: {
             status: "Verified"
@@ -15,11 +19,12 @@ exports.verify = (req, res) => {
         if (err) {
             res.send(err);
         } else {
-            User.findOne({email: 'admin@admin'}, (error, result)=>{
-                if(error){
+            User.findOne({ email: 'admin@admin' }, (error, result) => {
+                if (error) {
                     res.send(error);
-                }else{
-                    mail.sendMail(email, "Congratulations! Your registration is confirmed.", "confirmed", result.mail_template, name, (err, result) => {
+                } else {
+                    const mail_template = result.mail_template.replace(template_qr_url, qr_url);
+                    mail.sendMail(email, "Congratulations! Your registration is confirmed.", "confirmed", mail_template, name, (err, result) => {
                         if (err) {
                             res.send(err);
                         } else {
@@ -32,11 +37,15 @@ exports.verify = (req, res) => {
     });
 };
 
-
 exports.send_mail = (req, res) => {
-    const { email, name } = req.body;
-    User.findOne({email: 'admin@admin'}, (error, result)=>{
-        mail.sendMail(email, "Congratulations! Your registration is confirmed.", "confirmed", result.mail_template, name, (err, result) => {
+    const { _id, email, name } = req.body;
+    const DOMAIN = process.env.DOMAIN;
+    const qr_url = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${DOMAIN}/ticket/verify/${_id}`;
+    const template_qr_url = process.env.TEMPLATE_QR_URL;
+
+    User.findOne({ email: 'admin@admin' }, (error, result) => {
+        const mail_template = result.mail_template.replace(template_qr_url, qr_url);
+        mail.sendMail(email, "Congratulations! Your registration is confirmed.", "confirmed", mail_template, name, (err, result) => {
             if (err) {
                 res.send(err);
             } else {
@@ -47,9 +56,9 @@ exports.send_mail = (req, res) => {
 };
 
 exports.update_email_template = (req, res) => {
-    const email_template = req.body.email_template ; 
-    User.findOneAndUpdate({email: 'admin@admin'},{mail_template : email_template}, (error)=>{
-        if(error){
+    const email_template = req.body.email_template;
+    User.findOneAndUpdate({ email: 'admin@admin' }, { mail_template: email_template }, (error) => {
+        if (error) {
             console.log(error);
             res.send("Some error occured.");
         } else {
@@ -59,22 +68,22 @@ exports.update_email_template = (req, res) => {
 }
 
 exports.get_email_template = (req, res) => {
-    User.findOne({email: 'admin@admin'}, (error, result)=>{
-        if(error){
+    User.findOne({ email: 'admin@admin' }, (error, result) => {
+        if (error) {
             console.log(error);
             res.send("Some error occured.");
         } else {
-            res.render("update_email", {email_template : result.mail_template});
+            res.render("update_email", { email_template: result.mail_template });
         }
     })
 }
 
 exports.preview_email_template = (req, res) => {
-    User.findOne({email: "admin@admin"}, (error, result) => {
-        if(error){
+    User.findOne({ email: "admin@admin" }, (error, result) => {
+        if (error) {
             console.log(error);
             res.send("Some error occured");
-        } else{
+        } else {
             res.send(result.mail_template);
         }
     });
