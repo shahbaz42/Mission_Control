@@ -1,5 +1,6 @@
 const express = require('express');
 const mail = require('./services/mail');
+const morgan = require("morgan");
 const Registrations = require('./models/registration');
 const routes = require('./routes/router');
 const session = require("express-session");
@@ -15,7 +16,7 @@ const limiter = rateLimit({
 const app = express();
 app.set('trust proxy', 1);
 app.use(limiter);
-
+app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
